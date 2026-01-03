@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Untuk Wardah</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Poppins:wght@300;400&family=Sacramento&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+ height:100vh;
+ background:linear-gradient(180deg,#fff7fa,#ffe3ed);
+ font-family:'Poppins',sans-serif;
+ overflow:hidden;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+}
+
+/* 🌸 bunga jatuh */
+.petal{
+ position:absolute;
+ top:-40px;
+ font-size:20px;
+ opacity:.6;
+ animation:fall linear infinite;
+}
+@keyframes fall{
+ to{transform:translateY(110vh) rotate(360deg);opacity:0;}
+}
+
+/* 💗 layar nama */
+.name-screen{
+ position:absolute;
+ inset:0;
+ display:flex;
+ justify-content:center;
+ align-items:center;
+ background:rgba(255,247,250,.95);
+ z-index:10;
+ animation:fadeOut 1s ease forwards;
+ animation-delay:3s;
+}
+@keyframes fadeOut{
+ to{opacity:0;visibility:hidden;}
+}
+.name{
+ font-family:'Sacramento',cursive;
+ font-size:64px;
+ color:#d16c8f;
+ animation:glow 1.8s ease-in-out infinite alternate;
+}
+@keyframes glow{
+ from{text-shadow:0 0 8px #ffc1d6;}
+ to{text-shadow:0 0 18px #ff8fb8,0 0 30px #ffd1e2;}
+}
+
+/* 🐱 animasi */
+@keyframes sway{
+ 0%{transform:translateX(0);}
+ 50%{transform:translateX(18px);}
+ 100%{transform:translateX(0);}
+}
+
+.cat{
+ position:absolute;
+ bottom:40px;
+ left:20px;
+ width:120px;
+ animation:sway 4s ease-in-out infinite;
+}
+.side-cat{
+ position:fixed;
+ bottom:18px;
+ width:110px;
+ animation:sway 5s ease-in-out infinite;
+ pointer-events:none;
+}
+.side-left{left:15px;}
+.side-right{right:15px;transform:scaleX(-1);}
+.top-cat{
+ position:fixed;
+ top:18px;
+ right:18px;
+ width:90px;
+ animation:sway 3.2s ease-in-out infinite;
+}
+
+/* 💌 kartu */
+.card{
+ width:340px;
+ padding:30px;
+ background:white;
+ border-radius:32px;
+ box-shadow:0 18px 45px rgba(255,182,193,.45);
+ text-align:center;
+ position:relative;
+ z-index:3;
+}
+.sparkle{
+ position:absolute;
+ inset:0;
+ border-radius:32px;
+ box-shadow:0 0 25px rgba(255,182,193,.6);
+ animation:sparkle 2s infinite;
+}
+@keyframes sparkle{
+ 50%{box-shadow:0 0 40px rgba(255,200,220,.9);}
+}
+
+.title{
+ font-family:'Patrick Hand',cursive;
+ font-size:30px;
+ color:#d17c8f;
+}
+.line{
+ width:60px;height:4px;
+ background:#f4b6c6;
+ margin:14px auto;
+ border-radius:10px;
+}
+.text{
+ font-size:15px;
+ color:#6b4e57;
+ line-height:1.9;
+ min-height:210px;
+}
+.glow{
+ color:#d16c8f;
+ font-weight:600;
+ animation:glow 1.8s infinite alternate;
+}
+.footer{
+ margin-top:14px;
+ font-size:12px;
+ color:#b68b97;
+}
+</style>
+</head>
+
+<body>
+
+<audio id="bgm" autoplay loop muted>
+<source src="https://cdn.pixabay.com/audio/2022/03/15/audio_5c8f3c9f8c.mp3">
+</audio>
+
+<script>
+for(let i=0;i<22;i++){
+ const p=document.createElement("div");
+ p.className="petal";
+ p.innerHTML="🌸";
+ p.style.left=Math.random()*100+"vw";
+ p.style.animationDuration=(5+Math.random()*4)+"s";
+ document.body.appendChild(p);
+}
+</script>
+
+<div class="name-screen">
+ <div class="name">Wardah</div>
+</div>
+
+<!-- 🐱 KUCING -->
+<img class="cat" src="kucing_bawah.png">
+<img class="side-cat side-left" src="kucing_bawah.png">
+<img class="side-cat side-right" src="kucing_bawah.png">
+<img class="top-cat" src="kucing_atas.png">
+
+<div class="card">
+ <div class="sparkle"></div>
+ <div class="title">Untukmu</div>
+ <div class="line"></div>
+ <div class="text" id="typing"></div>
+ <div class="footer">🤍 tetap semangat ya, Wardah</div>
+</div>
+
+<script>
+const bgm=document.getElementById("bgm");
+const textEl=document.getElementById("typing");
+
+const text = `
+<span class="glow">Wardah</span>,
+kalau hari ini terasa berat,
+ingat… wardahh ngga sendiri
+Egi disinii ada kalauu Wardah butuhh
+
+Pelan-pelan itu tidak apa-apa,
+lelah juga bukan tanda menyerah.
+Semua prosesmu berarti,
+meski belum terlihat sekarang.
+
+Percaya pada dirimu sendiri,
+karena kamu lebih kuat
+dari yang kamu kira.
+
+Terus melangkah ya, <span class="glow">Wardah</span>.
+Dunia sedang menunggu
+versi terbaik darimu 🤍
+`;
+
+let i=0;
+function typeWriter(){
+ if(i<text.length){
+  if(text[i]==="<"){
+   let end=text.indexOf(">",i);
+   textEl.innerHTML+=text.substring(i,end+1);
+   i=end+1;
+  }else{
+   textEl.innerHTML+=text[i];
+   i++;
+  }
+  setTimeout(typeWriter,12);
+ }
+}
+
+// langsung mulai tanpa delay
+bgm.muted=false;
+bgm.play();
+typeWriter();
+</script>
+
+</body>
+</html>
